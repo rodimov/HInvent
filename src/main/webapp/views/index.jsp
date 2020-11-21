@@ -32,6 +32,7 @@
           out.println("<li><a href=\"/\">Список кабинетов</a>");
           if (userType == 0) {
             out.println("<li><a href=\"/sign_up\">Регистрация пользователя</a>");
+            out.println("<li><a href=\"/all_users\">Список пользователей</a>");
             out.println("<li><a href=\"/create_cab\">Добавить кабинет</a>");
           } else {
             out.println("<li><a href=\"/all_items\">Оборудование</a>");
@@ -370,6 +371,104 @@
             out.println("    </form>");
             out.println("  </div>");
             out.println("</div>");
+          } else if (pageType.equals("edit_user")) {
+
+            String message = (String) request.getAttribute("message");
+
+            if (message != null) {
+              out.println("<div class=\"w3-panel w3-red w3-display-container w3-card-4 w3-round\"" +
+                      " style=\"margin-left: 25%; margin-right: 25%;\">\n" +
+                      "   <span onclick=\"this.parentElement.style.display='none'\"\n" +
+                      "   class=\"w3-button w3-margin-right w3-display-right w3-round-large w3-hover-red w3-border" +
+                      " w3-border-red w3-hover-border-grey\">×</span>\n" +
+                      "   <h5>" + message + "</h5>\n" +
+                      "</div>");
+            }
+
+            User userEditable = (User) request.getAttribute("user_editable");
+
+            out.println("<div class=\"w3-card-4\" style=\"margin-left: 25%; margin-right: 25%;\">");
+            out.println("  <div style=\"margin-top: 1%; margin-bottom: 1%;\">");
+            out.println("    <form method=\"post\" class=\"w3-selection w3-light-grey w3-padding\">");
+            out.println("<br><div>Изменение данных пользователя</div><br>");
+            out.println("      <label>Имя:");
+            out.print("<input required maxlength=\"255\" type=\"text\" name=\"first_name\" value="
+                    + "\"" + userEditable.getFirstName() + "\"");
+            out.println("class=\"w3-input w3-animate-input w3-border w3-round-large\"><br>");
+            out.println("      </label>");
+            out.println("      <label>Фамилия:");
+            out.print("<input required maxlength=\"255\" type=\"text\" name=\"second_name\" value="
+                    + "\"" + userEditable.getSecondName() + "\"");
+            out.println("class=\"w3-input w3-animate-input w3-border w3-round-large\"><br>");
+            out.println("      </label>");
+            out.println("      <label>Email:");
+            out.print("<input required maxlength=\"255\" type=\"text\" name=\"email\" value="
+                    + "\"" + userEditable.getEmail() + "\"");
+            out.println("class=\"w3-input w3-animate-input w3-border w3-round-large\"><br>");
+            out.println("      </label>");
+            out.println("      <label>Пароль:");
+            out.print("<input required maxlength=\"255\" type=\"text\" name=\"password\" value="
+                    + "\"" + userEditable.getPassword() + "\"");
+            out.println("class=\"w3-input w3-animate-input w3-border w3-round-large\"><br>");
+            out.println("      </label>");
+            out.println("<input hidden type=\"text\" name=\"user_edit_id\" value=" + "\"" + userEditable.getId() + "\">");
+            out.println("      <div class=\"w3-center\">");
+            out.println("<button type=\"submit\" class=\"w3-btn w3-blue w3-round-large w3-margin-bottom\">Отправить</button>");
+            out.println("      </div>");
+            out.println("    </form>");
+            out.println("  </div>");
+            out.println("</div>");
+
+          } else if (pageType.equals("show_users")) {
+            List<User> users = (List<User>) request.getAttribute("users");
+
+            if (users == null) {
+              return;
+            }
+
+            boolean isUsersEmpty = true;
+
+            for (User user : users) {
+              if (user.getType() == 0) {
+                continue;
+              }
+
+              out.println("<div class=\"w3-card-4 w3-left-align\" style=\"margin-left: 25%; margin-right: 25%;\">");
+              out.println("<div style=\"margin: 5%;\">");
+              out.println("<div><b>Имя:</b> " + user.getFirstName() + "</div>");
+              out.println("<div><b>Фамилия:</b> " + user.getSecondName() + "</div>");
+              out.println("<div><b>E-mail:</b> " + user.getEmail() + "</div>");
+
+              out.println("<br>");
+
+              out.println("<div class=\"w3-center\">");
+
+              out.println("<button class=\"w3-btn w3-blue w3-round-large w3-margin-bottom\""
+                      + " onclick=\"location.href='/edit_user?id="
+                      + user.getId() + "'\">Редактировать</button><br>");
+
+              out.println("</div>");
+
+              out.println("</div>");
+              out.println("</div>");
+
+              isUsersEmpty = false;
+            }
+
+            if (isUsersEmpty) {
+              out.println("<div class=\"w3-card-4 w3-left-align\" style=\"margin-left: 25%; margin-right: 25%;\">");
+              out.println("<div style=\"margin: 5%;\">");
+
+              out.println("<br>");
+
+              out.println("<div class=\"w3-center\"><b>Пусто</b></div>");
+
+              out.println("<br>");
+
+              out.println("</div>");
+              out.println("</div>");
+            }
+
           }
 
           out.println("</div>");

@@ -1,6 +1,5 @@
 package com.alexandra.HInvent.servlets;
 
-import com.alexandra.HInvent.entities.Cabinet;
 import com.alexandra.HInvent.entities.Item;
 import com.alexandra.HInvent.entities.User;
 import com.alexandra.HInvent.services.CabinetService;
