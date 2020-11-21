@@ -54,7 +54,7 @@
 
           out.println("<div class=\"w3-container w3-center w3-margin-bottom w3-padding\">");
 
-          if (pageType.equals("index") || (!pageType.equals("sign_up") && !pageType.equals("create_cabinet") && !pageType.equals("add_item") && !pageType.equals("show_items"))) {
+          if (pageType.equals("index")) {
             List<Cabinet> cabinets = (List<Cabinet>) request.getAttribute("cabinets");
 
             if (cabinets == null) {
@@ -131,6 +131,9 @@
               out.println("<div class=\"w3-center\">");
 
               if (userType == 0) {
+                out.println("<button class=\"w3-btn w3-blue w3-round-large w3-margin-bottom\""
+                        + " onclick=\"location.href='/edit_item?id="
+                        + item.getId() + "'\">Редактировать</button><br>");
                 if (item.getStatus().equals("В эксплуатации")) {
                   out.println("<button class=\"w3-btn w3-blue w3-round-large w3-margin-bottom\""
                           + " onclick=\"location.href='/set_debt?id="
@@ -295,6 +298,78 @@
             out.println("  </div>");
             out.println("</div>");
 
+          } else if (pageType.equals("edit_item")) {
+
+
+            Item item = (Item) request.getAttribute("item");
+            User user = (User) request.getAttribute("user");
+            List<User> users = (List<User>) request.getAttribute("users");
+
+            if (users == null || item == null || user == null) {
+              return;
+            }
+
+            out.println("<div class=\"w3-card-4\" style=\"margin-left: 25%; margin-right: 25%;\">");
+            out.println("  <div style=\"margin-top: 1%; margin-bottom: 1%;\">");
+            out.println("    <form method=\"post\" class=\"w3-selection w3-light-grey w3-padding\">");
+            out.println("<br><div>Изменить оборудование в кабинете " + item.getCabinet().getName() + "</div><br>");
+            out.println("      <label>Ответственный:");
+            out.println("        <br><select class=\"w3-input w3-animate-input w3-border w3-round-large\" name=\"user_id\">");
+            for (User i : users) {
+              if (i.getId() != item.getUser().getId()) {
+                out.print("        <option value=\"" + i.getId() + "\">");
+              } else {
+                out.print("        <option selected=\"selected\" value=\"" + i.getId() + "\">");
+              }
+              out.print(i.getSecondName() + " " + i.getFirstName());
+              out.println("        </option>");
+            }
+            out.println("        </select><br>");
+            out.println("      </label>");
+            out.println("      <label>Имя:");
+            out.print("<input required maxlength=\"255\" type=\"text\" name=\"name\" value=" + "\"" + item.getName() + "\"");
+            out.println("class=\"w3-input w3-animate-input w3-border w3-round-large\"><br>");
+            out.println("      </label>");
+            out.println("      <label>Стоимость:");
+            out.print("<input required type=\"number\" min=\"1\" max=\"3200000\" name=\"coast\" value=" + "\"" + item.getCoast() + "\"");
+            out.println("class=\"w3-input w3-animate-input w3-border w3-round-large\"><br>");
+            out.println("      </label>");
+            out.println("      <label>Изображение:");
+            out.print("<input required maxlength=\"255\" type=\"text\" name=\"pic\" value=" + "\"" + item.getPicture() + "\"");
+            out.println("class=\"w3-input w3-animate-input w3-border w3-round-large\"><br>");
+            out.println("      </label>");
+            out.println("      <label>Статус:");
+            out.println("        <br><select class=\"w3-input w3-animate-input w3-border w3-round-large\" name=\"status\">");
+            if (!item.getStatus().equals("Недостача")) {
+              out.print("        <option value=\"Недостача\">");
+            } else {
+              out.print("        <option selected=\"selected\" value=\"Недостача\">");
+            }
+            out.print("Недостача");
+            out.println("        </option>");
+            if (!item.getStatus().equals("В эксплуатации")) {
+              out.print("        <option value=\"В эксплуатации\">");
+            } else {
+              out.print("        <option selected=\"selected\" value=\"В эксплуатации\">");
+            }
+            out.print("В эксплуатации");
+            out.println("        </option>");
+            if (!item.getStatus().equals("Списано")) {
+              out.print("        <option value=\"Списано\">");
+            } else {
+              out.print("        <option selected=\"selected\" value=\"Списано\">");
+            }
+            out.print("Списано");
+            out.println("        </option>");
+            out.println("        </select><br>");
+            out.println("      </label>");
+            out.println("<input hidden type=\"text\" name=\"item_id\" value=" + "\"" + item.getId() + "\">");
+            out.println("      <div class=\"w3-center\">");
+            out.println("<button type=\"submit\" class=\"w3-btn w3-blue w3-round-large w3-margin-bottom\">Отправить</button>");
+            out.println("      </div>");
+            out.println("    </form>");
+            out.println("  </div>");
+            out.println("</div>");
           }
 
           out.println("</div>");
