@@ -54,48 +54,47 @@
 
           out.println("<div class=\"w3-container w3-center w3-margin-bottom w3-padding\">");
 
+          if (pageType.equals("index") || (!pageType.equals("sign_up") && !pageType.equals("create_cabinet") && !pageType.equals("add_item") && !pageType.equals("show_items"))) {
+            List<Cabinet> cabinets = (List<Cabinet>) request.getAttribute("cabinets");
 
-          if (pageType.equals("index") || (!pageType.equals("sign_up") && !pageType.equals("create_cabinet") && !pageType.equals("add_item"))) {
-//            List<Cabinet> cabinets = (List<Cabinet>) request.getAttribute("cabinets");
-//
-//            if (cabinets == null) {
-//              return;
-//            }
+            if (cabinets == null) {
+              return;
+            }
 
-//            for (Cabinet cabinet : cabinets) {
-//              out.println("<div class=\"w3-card-4 w3-left-align\" style=\"margin-left: 25%; margin-right: 25%;\">");
-//              out.println("<div style=\"margin: 5%;\">");
-//
-//              out.println("<br>");
-//
-//              out.println("<div><b>Имя:</b> " + cabinet.getName() + "</div>");
-//              out.println("<div><b>Описание:</b> " + cabinet.getDescription() + "</div>");
-//
-//              out.println("<br>");
-//
-//              out.println("<div class=\"w3-center\">");
-//
-//              out.println("<button class=\"w3-btn w3-blue w3-round-large w3-margin-bottom\""
-//                      + " onclick=\"location.href='/cab?id="
-//                      + cabinet.getId() + "'\">Оборудование</button><br>");
-//
-//              if (userType == 0) {
-//                out.println("<button class=\"w3-btn w3-blue w3-round-large w3-margin-bottom\""
-//                        + " onclick=\"location.href='/add_item?id="
-//                        + cabinet.getId() + "'\">Добавить оборудование</button><br>");
-//
-//                out.println("<button class=\"w3-btn w3-blue w3-round-large w3-margin-bottom\""
-//                        + " onclick=\"location.href='/edit_cab?id="
-//                        + cabinet.getId() + "'\">Редактировать кабинет</button><br>");
-//              }
-//
-//              out.println("</div>");
-//
-//              out.println("</div>");
-//              out.println("</div>");
-//            }
+            for (Cabinet cabinet : cabinets) {
+              out.println("<div class=\"w3-card-4 w3-left-align\" style=\"margin-left: 25%; margin-right: 25%;\">");
+              out.println("<div style=\"margin: 5%;\">");
 
-            if (true /*|| cabinets.isEmpty()*/) {
+              out.println("<br>");
+
+              out.println("<div><b>Имя:</b> " + cabinet.getName() + "</div>");
+              out.println("<div><b>Описание:</b> " + cabinet.getDescription() + "</div>");
+
+              out.println("<br>");
+
+              out.println("<div class=\"w3-center\">");
+
+              out.println("<button class=\"w3-btn w3-blue w3-round-large w3-margin-bottom\""
+                      + " onclick=\"location.href='/cab?id="
+                      + cabinet.getId() + "'\">Оборудование</button><br>");
+
+              if (userType == 0) {
+                out.println("<button class=\"w3-btn w3-blue w3-round-large w3-margin-bottom\""
+                        + " onclick=\"location.href='/add_item?id="
+                        + cabinet.getId() + "'\">Добавить оборудование</button><br>");
+
+                out.println("<button class=\"w3-btn w3-blue w3-round-large w3-margin-bottom\""
+                        + " onclick=\"location.href='/edit_cab?id="
+                        + cabinet.getId() + "'\">Редактировать кабинет</button><br>");
+              }
+
+              out.println("</div>");
+
+              out.println("</div>");
+              out.println("</div>");
+            }
+
+            if (cabinets.isEmpty()) {
               out.println("<div class=\"w3-card-4 w3-left-align\" style=\"margin-left: 25%; margin-right: 25%;\">");
               out.println("<div style=\"margin: 5%;\">");
 
