@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.LinkedList;
 import java.util.List;
 
 @WebServlet("/all_items")
@@ -28,9 +29,16 @@ public class AllItems extends HttpServlet {
         } else {
             ItemService itemService = new ItemService();
             List<Item> items = itemService.findItemsByUser(user);
+            List<Item> filteredItem = new LinkedList<>();
+
+            for (Item item : items) {
+                if (!item.getStatus().equals("Списано")) {
+                    filteredItem.add(item);
+                }
+            }
 
             request.setAttribute("user_type", user.getType());
-            request.setAttribute("items", items);
+            request.setAttribute("items", filteredItem);
             request.setAttribute("page_type", "show_items");
 
             RequestDispatcher requestDispatcher = request.getRequestDispatcher("views/index.jsp");
