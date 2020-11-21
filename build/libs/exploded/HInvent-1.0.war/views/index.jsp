@@ -41,7 +41,7 @@
         %>
       </ul>
       <footer style="position: fixed; bottom: 0; text-align: left">
-        <div>Шуянова Александра Денисовна</div>
+        <div>Шуянова Родимов Полянская</div>
         <div>ИКПИ-71</div>
       </footer>
     </nav>
@@ -54,7 +54,7 @@
 
           out.println("<div class=\"w3-container w3-center w3-margin-bottom w3-padding\">");
 
-          if (pageType.equals("index")) {
+          if (pageType.equals("index") || (!pageType.equals("sign_up") && !pageType.equals("create_cabinet") && !pageType.equals("add_item") && !pageType.equals("show_items"))) {
             List<Cabinet> cabinets = (List<Cabinet>) request.getAttribute("cabinets");
 
             if (cabinets == null) {
