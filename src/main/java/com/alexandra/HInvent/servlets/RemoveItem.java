@@ -43,7 +43,8 @@ public class RemoveItem extends HttpServlet {
                 return;
             }
 
-            itemService.deleteItem(item);
+            item.setStatus("Списано");
+            itemService.updateItem(item);
 
             response.sendRedirect("/cab?id=" + item.getCabinet().getId());
         }

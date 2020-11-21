@@ -34,6 +34,7 @@
             out.println("<li><a href=\"/sign_up\">Регистрация пользователя</a>");
             out.println("<li><a href=\"/all_users\">Список пользователей</a>");
             out.println("<li><a href=\"/create_cab\">Добавить кабинет</a>");
+            out.println("<li><a href=\"/history\">История списаний</a>");
           } else {
             out.println("<li><a href=\"/all_items\">Оборудование</a>");
             out.println("<li><a href=\"/debt\">Недостача</a>");
@@ -140,9 +141,11 @@
                           + " onclick=\"location.href='/set_debt?id="
                           + item.getId() + "'\">Недостача</button><br>");
                 }
-                out.println("<button class=\"w3-btn w3-blue w3-round-large w3-margin-bottom\""
-                        + " onclick=\"location.href='/remove_item?id="
-                        + item.getId() + "'\">Списать</button><br>");
+                if (!item.getStatus().equals("Списано")) {
+                  out.println("<button class=\"w3-btn w3-blue w3-round-large w3-margin-bottom\""
+                          + " onclick=\"location.href='/remove_item?id="
+                          + item.getId() + "'\">Списать</button><br>");
+                }
               }
 
               out.println("</div>");
