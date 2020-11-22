@@ -1,10 +1,7 @@
 package com.alexandra.HInvent.servlets;
 
-import com.alexandra.HInvent.entities.Cabinet;
-import com.alexandra.HInvent.entities.Item;
 import com.alexandra.HInvent.entities.User;
-import com.alexandra.HInvent.services.CabinetService;
-import com.alexandra.HInvent.services.ItemService;
+import com.alexandra.HInvent.services.UserService;
 import com.alexandra.HInvent.utils.Localization;
 
 import javax.servlet.RequestDispatcher;
@@ -18,8 +15,8 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
-@WebServlet("/cab")
-public class ItemsInCabinet extends HttpServlet {
+@WebServlet("/blocked_users")
+public class BlockedUsers extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Localization.setLocal(request, response);
@@ -29,39 +26,25 @@ public class ItemsInCabinet extends HttpServlet {
         if (user == null) {
             response.sendRedirect("/sign_in");
         } else {
-            CabinetService cabinetService = new CabinetService();
-
-            String idParametr = request.getParameter("id");
-            Cabinet cabinet = null;
-
-            if (idParametr != null) {
-                try {
-                    cabinet = cabinetService.findCabinet(Integer.parseInt(idParametr));
-                } catch (Exception e) {
-                    response.sendRedirect("/");
-                    return;
-                }
-            }
-
-            if(cabinet == null) {
+            if (user.getType() != 0) {
                 response.sendRedirect("/");
                 return;
             }
 
-            ItemService itemService = new ItemService();
-            List<Item> items = itemService.findItemsByCabinet(cabinet);
-            List<Item> filteredItem = new LinkedList<>();
+            UserService userService = new UserService();
+            List<User> users = userService.findAllUsers();
+            List<User> filteredUsers = new LinkedList<>();
 
-            for (Item item : items) {
-                if (!item.getStatus().equals("Списано")) {
-                    filteredItem.add(item);
+            for (User filterUser : users) {
+                if (filterUser.isBlocked() != 0) {
+                    filteredUsers.add(filterUser);
                 }
             }
 
             request.setAttribute("username", user.getSecondName() + " " + user.getFirstName());
             request.setAttribute("user_type", user.getType());
-            request.setAttribute("items", filteredItem);
-            request.setAttribute("page_type", "show_items");
+            request.setAttribute("page_type", "show_users");
+            request.setAttribute("users", filteredUsers);
 
             RequestDispatcher requestDispatcher = request.getRequestDispatcher("views/index.jsp");
             requestDispatcher.forward(request, response);

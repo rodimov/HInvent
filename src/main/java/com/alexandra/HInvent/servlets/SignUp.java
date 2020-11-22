@@ -24,6 +24,7 @@ public class SignUp extends HttpServlet {
         if (user == null || user.getType() != 0) {
             response.sendRedirect("/");
         } else {
+            request.setAttribute("username", user.getSecondName() + " " + user.getFirstName());
             request.setAttribute("user_type", user.getType());
             request.setAttribute("page_type", "sign_up");
 
@@ -65,6 +66,7 @@ public class SignUp extends HttpServlet {
         newUser.setSecondName(secondName);
         newUser.setPassword(password);
         newUser.setType(1);
+        newUser.setBlockState(0);
 
         userService.saveUser(newUser);
 

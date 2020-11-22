@@ -42,6 +42,7 @@ public class History extends HttpServlet {
                 }
             }
 
+            request.setAttribute("username", user.getSecondName() + " " + user.getFirstName());
             request.setAttribute("user_type", user.getType());
             request.setAttribute("page_type", "show_items");
             request.setAttribute("items", filteredItem);

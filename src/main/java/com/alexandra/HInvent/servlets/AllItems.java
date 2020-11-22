@@ -37,6 +37,7 @@ public class AllItems extends HttpServlet {
                 }
             }
 
+            request.setAttribute("username", user.getSecondName() + " " + user.getFirstName());
             request.setAttribute("user_type", user.getType());
             request.setAttribute("items", filteredItem);
             request.setAttribute("page_type", "show_items");

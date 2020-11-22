@@ -50,6 +50,7 @@ public class EditItem extends HttpServlet {
             UserService userService = new UserService();
             List<User> users = userService.findAllUsers();
 
+            request.setAttribute("username", user.getSecondName() + " " + user.getFirstName());
             request.setAttribute("page_type", "edit_item");
             request.setAttribute("item", item);
             request.setAttribute("user", user);

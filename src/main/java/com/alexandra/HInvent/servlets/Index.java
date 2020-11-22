@@ -24,6 +24,7 @@ public class Index extends HttpServlet {
         User user = (User) session.getAttribute("user");
 
         if (user != null) {
+            request.setAttribute("username", user.getSecondName() + " " + user.getFirstName());
             request.setAttribute("user_type", user.getType());
             request.setAttribute("page_type", "index");
 

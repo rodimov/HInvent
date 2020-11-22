@@ -46,9 +46,14 @@ public class SignIn extends HttpServlet {
 
         User user = userService.findUserByEmail(email);
 
-        if (user != null && user.getPassword().equals(password)) {
+        if (user != null && user.getPassword().equals(password) && user.isBlocked() == 0) {
             session.setAttribute("user", user);
             response.sendRedirect("/");
+        } else if (user != null && user.isBlocked() != 0) {
+            String message = "Пользователь заблокирован!";
+            request.setAttribute("message", message);
+            RequestDispatcher requestDispatcher = request.getRequestDispatcher("views/sign_in.jsp");
+            requestDispatcher.forward(request, response);
         } else {
             String message = "Неправильный email или пароль!";
             request.setAttribute("message", message);

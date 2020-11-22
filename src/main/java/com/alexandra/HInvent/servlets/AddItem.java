@@ -51,6 +51,7 @@ public class AddItem extends HttpServlet {
             UserService userService = new UserService();
             List<User> users = userService.findAllUsers();
 
+            request.setAttribute("username", user.getSecondName() + " " + user.getFirstName());
             request.setAttribute("user_type", user.getType());
             request.setAttribute("page_type", "add_item");
             request.setAttribute("cabinet", cabinet);
