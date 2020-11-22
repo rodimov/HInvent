@@ -25,6 +25,7 @@ public class CreateCabinet extends HttpServlet {
         if (user == null || user.getType() != 0) {
             response.sendRedirect("/");
         } else {
+            request.setAttribute("username", user.getSecondName() + " " + user.getFirstName());
             request.setAttribute("user_type", user.getType());
             request.setAttribute("page_type", "create_cabinet");
 

@@ -44,6 +44,7 @@ public class EditCabinet extends HttpServlet {
                 return;
             }
 
+            request.setAttribute("username", user.getSecondName() + " " + user.getFirstName());
             request.setAttribute("user_type", user.getType());
             request.setAttribute("page_type", "edit_cabinet");
             request.setAttribute("cabinet", cabinet);

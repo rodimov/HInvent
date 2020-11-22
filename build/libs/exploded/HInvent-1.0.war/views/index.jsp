@@ -20,6 +20,7 @@
     <%
       int userType = (int) request.getAttribute("user_type");
       String pageType = (String) request.getAttribute("page_type");
+      String username = (String) request.getAttribute("username");
     %>
     <input type="checkbox" id="nav-toggle" hidden>
     <nav class="nav">
@@ -27,13 +28,20 @@
       <h2 class="logo">
         <div>HInvent</div>
       </h2>
+      <h3>
+        <%
+          out.println("Добро пожаловать,");
+          out.println(username);
+        %>
+      </h3>
       <ul>
         <%
           out.println("<li><a href=\"/\">Список кабинетов</a>");
           if (userType == 0) {
             out.println("<li><a href=\"/sign_up\">Регистрация пользователя</a>");
-            out.println("<li><a href=\"/all_users\">Список пользователей</a>");
             out.println("<li><a href=\"/create_cab\">Добавить кабинет</a>");
+            out.println("<li><a href=\"/all_users\">Список пользователей</a>");
+            out.println("<li><a href=\"/blocked_users\">Заблокированные аккаунты</a>");
             out.println("<li><a href=\"/history\">История списаний</a>");
           } else {
             out.println("<li><a href=\"/all_items\">Оборудование</a>");
@@ -413,6 +421,25 @@
             out.print("<input required maxlength=\"255\" type=\"text\" name=\"password\" value="
                     + "\"" + userEditable.getPassword() + "\"");
             out.println("class=\"w3-input w3-animate-input w3-border w3-round-large\"><br>");
+            out.println("      </label>");
+            out.println("      </label>");
+            out.println("      <label>Статус:");
+            out.println("        <br><select class=\"w3-input w3-animate-input w3-border w3-round-large\" name=\"block_status\">");
+            if (userEditable.isBlocked() != 0) {
+              out.print("        <option value=\"Активный\">");
+            } else {
+              out.print("        <option selected=\"selected\" value=\"Активный\">");
+            }
+            out.print("Активный");
+            out.println("        </option>");
+            if (userEditable.isBlocked() == 0) {
+              out.print("        <option value=\"Заблокированный\">");
+            } else {
+              out.print("        <option selected=\"selected\" value=\"Заблокированный\">");
+            }
+            out.print("Заблокированный");
+            out.println("        </option>");
+            out.println("        </select><br>");
             out.println("      </label>");
             out.println("<input hidden type=\"text\" name=\"user_edit_id\" value=" + "\"" + userEditable.getId() + "\">");
             out.println("      <div class=\"w3-center\">");

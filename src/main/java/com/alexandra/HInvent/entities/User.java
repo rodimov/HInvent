@@ -21,6 +21,9 @@ public class User {
 
     private int type;
 
+    @Column(name = "block_state")
+    private int blockState;
+
     public User() {}
 
     public int getId() {
@@ -66,4 +69,8 @@ public class User {
     public void setType(int type) {
         this.type = type;
     }
+
+    public int isBlocked() { return blockState; }
+
+    public void setBlockState(int blockState) { this.blockState = blockState; }
 }

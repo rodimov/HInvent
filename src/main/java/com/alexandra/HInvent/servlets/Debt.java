@@ -29,6 +29,7 @@ public class Debt extends HttpServlet {
             ItemService itemService = new ItemService();
             List<Item> items = itemService.findItemsByUserDebt(user);
 
+            request.setAttribute("username", user.getSecondName() + " " + user.getFirstName());
             request.setAttribute("user_type", user.getType());
             request.setAttribute("items", items);
             request.setAttribute("page_type", "show_items");

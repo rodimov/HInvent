@@ -25,6 +25,7 @@ public class EditUser extends HttpServlet {
         if (user == null || user.getType() != 0) {
             response.sendRedirect("/all_users");
         } else {
+            request.setAttribute("username", user.getSecondName() + " " + user.getFirstName());
             request.setAttribute("user_type", user.getType());
             request.setAttribute("page_type", "edit_user");
 
@@ -69,6 +70,7 @@ public class EditUser extends HttpServlet {
         String secondName = request.getParameter("second_name");
         String email = request.getParameter("email");
         String password = request.getParameter("password");
+        String blockStatus = request.getParameter("block_status");
 
         User userEditable = null;
 
@@ -103,6 +105,12 @@ public class EditUser extends HttpServlet {
         userEditable.setFirstName(firstName);
         userEditable.setSecondName(secondName);
         userEditable.setPassword(password);
+
+        if (blockStatus.equals("Активный")) {
+            userEditable.setBlockState(0);
+        } else if (blockStatus.equals("Заблокированный")) {
+            userEditable.setBlockState(1);
+        }
 
         userService.updateUser(userEditable);
 
