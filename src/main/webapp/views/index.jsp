@@ -1,7 +1,8 @@
 <%@ page import="com.alexandra.HInvent.entities.Cabinet" %>
 <%@ page import="java.util.List" %>
 <%@ page import="com.alexandra.HInvent.entities.Item" %>
-<%@ page import="com.alexandra.HInvent.entities.User" %><%--
+<%@ page import="com.alexandra.HInvent.entities.User" %>
+<%@ page import="com.alexandra.HInvent.entities.File" %><%--
   Created by IntelliJ IDEA.
   User: Alexandra
   Date: 22.12.2019
@@ -154,6 +155,14 @@
                           + " onclick=\"location.href='/remove_item?id="
                           + item.getId() + "'\">Списать</button><br>");
                 }
+
+                out.println("<button class=\"w3-btn w3-blue w3-round-large w3-margin-bottom\""
+                        + " onclick=\"location.href='/item_files?id="
+                        + item.getId() + "'\">Список документов</button><br>");
+
+                out.println("<button class=\"w3-btn w3-blue w3-round-large w3-margin-bottom\""
+                        + " onclick=\"location.href='/upload_item_file?id="
+                        + item.getId() + "'\">Приложить документ</button><br>");
               }
 
               out.println("</div>");
@@ -486,6 +495,90 @@
             }
 
             if (isUsersEmpty) {
+              out.println("<div class=\"w3-card-4 w3-left-align\" style=\"margin-left: 25%; margin-right: 25%;\">");
+              out.println("<div style=\"margin: 5%;\">");
+
+              out.println("<br>");
+
+              out.println("<div class=\"w3-center\"><b>Пусто</b></div>");
+
+              out.println("<br>");
+
+              out.println("</div>");
+              out.println("</div>");
+            }
+
+          } else if (pageType.equals("upload_item_file")) {
+
+            Item item = (Item) request.getAttribute("item");
+
+            if (item == null) {
+              return;
+            }
+
+            String message = (String) request.getAttribute("message");
+
+            if (message != null) {
+              out.println("<div class=\"w3-panel w3-red w3-display-container w3-card-4 w3-round\"" +
+                      " style=\"margin-left: 25%; margin-right: 25%;\">\n" +
+                      "   <span onclick=\"this.parentElement.style.display='none'\"\n" +
+                      "   class=\"w3-button w3-margin-right w3-display-right w3-round-large w3-hover-red w3-border" +
+                      " w3-border-red w3-hover-border-grey\">×</span>\n" +
+                      "   <h5>" + message + "</h5>\n" +
+                      "</div>");
+            }
+
+            out.println("<div class=\"w3-card-4\" style=\"margin-left: 25%; margin-right: 25%;\">");
+            out.println("  <div style=\"margin-top: 1%; margin-bottom: 1%;\">");
+            out.println("    <form method=\"post\" enctype=\"multipart/form-data\" class=\"w3-selection w3-light-grey w3-padding\">");
+            out.println("<br><div>Приложить новый файл к оборудованию " + item.getName() + "</div><br>");
+            out.println("      <label>Файл:");
+            out.print("<input required maxlength=\"255\" type=\"file\" name=\"file\" ");
+            out.println("class=\"w3-input w3-animate-input w3-border w3-round-large\"><br>");
+            out.println("      </label>");
+            out.println("      <label>Описание:");
+            out.print("<input required maxlength=\"255\" type=\"text\" name=\"description\" ");
+            out.println("class=\"w3-input w3-animate-input w3-border w3-round-large\"><br>");
+            out.println("      </label>");
+            out.println("<input hidden type=\"text\" name=\"item_id\" value=" + "\"" + item.getId() + "\">");
+            out.println("      <div class=\"w3-center\">");
+            out.println("<button type=\"submit\" class=\"w3-btn w3-blue w3-round-large w3-margin-bottom\">Отправить</button>");
+            out.println("      </div>");
+            out.println("    </form>");
+            out.println("  </div>");
+            out.println("</div>");
+
+          } else if (pageType.equals("item_files")) {
+            List<File> files = (List<File>) request.getAttribute("files");
+
+            if (files == null) {
+              return;
+            }
+
+            for (File file : files) {
+              out.println("<div class=\"w3-card-4 w3-left-align\" style=\"margin-left: 25%; margin-right: 25%;\">");
+              out.println("<div style=\"margin: 5%;\">");
+
+              out.println("<br>");
+
+              out.println("<div><b>Имя файла:</b> " + file.getName() + "</div>");
+              out.println("<div><b>Описание:</b> " + file.getDescription() + "</div>");
+
+              out.println("<br>");
+
+              out.println("<div class=\"w3-center\">");
+
+              out.println("<button class=\"w3-btn w3-blue w3-round-large w3-margin-bottom\""
+                      + " onclick=\"location.href='/download_item_file?id="
+                      + file.getId() + "'\">Скачать документ</button><br>");
+
+              out.println("</div>");
+
+              out.println("</div>");
+              out.println("</div>");
+            }
+
+            if (files.isEmpty()) {
               out.println("<div class=\"w3-card-4 w3-left-align\" style=\"margin-left: 25%; margin-right: 25%;\">");
               out.println("<div style=\"margin: 5%;\">");
 

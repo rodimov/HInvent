@@ -1,9 +1,7 @@
 package com.alexandra.HInvent.services;
 
 import com.alexandra.HInvent.dao.CabinetDAO;
-import com.alexandra.HInvent.dao.UserDAO;
 import com.alexandra.HInvent.entities.Cabinet;
-import com.alexandra.HInvent.entities.User;
 
 import java.util.List;
 

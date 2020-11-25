@@ -1,6 +1,7 @@
 package com.alexandra.HInvent.utils;
 
 import com.alexandra.HInvent.entities.Cabinet;
+import com.alexandra.HInvent.entities.File;
 import com.alexandra.HInvent.entities.Item;
 import com.alexandra.HInvent.entities.User;
 import org.hibernate.SessionFactory;
@@ -19,6 +20,7 @@ public class HibernateSessionFactoryUtil {
                 configuration.addAnnotatedClass(User.class);
                 configuration.addAnnotatedClass(Cabinet.class);
                 configuration.addAnnotatedClass(Item.class);
+                configuration.addAnnotatedClass(File.class);
                 StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties());
                 sessionFactory = configuration.buildSessionFactory(builder.build());
 
