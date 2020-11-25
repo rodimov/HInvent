@@ -157,13 +157,13 @@
                 }
 
                 out.println("<button class=\"w3-btn w3-blue w3-round-large w3-margin-bottom\""
-                        + " onclick=\"location.href='/item_files?id="
-                        + item.getId() + "'\">Список документов</button><br>");
-
-                out.println("<button class=\"w3-btn w3-blue w3-round-large w3-margin-bottom\""
                         + " onclick=\"location.href='/upload_item_file?id="
                         + item.getId() + "'\">Приложить документ</button><br>");
               }
+
+              out.println("<button class=\"w3-btn w3-blue w3-round-large w3-margin-bottom\""
+                      + " onclick=\"location.href='/item_files?id="
+                      + item.getId() + "'\">Список документов</button><br>");
 
               out.println("</div>");
 
